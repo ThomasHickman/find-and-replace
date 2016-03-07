@@ -11,7 +11,7 @@ ResultsModel = require './project/results-model'
 ResultsPaneView = require './project/results-pane'
 
 module.exports =
-  activate: ({findOptions, findHistory, replaceHistory, pathsHistory}={}) ->
+  activate: ({findOptions, findHistory, replaceHistory, pathsHistory, scopeHistory}={}) ->
     atom.workspace.addOpener (filePath) ->
       new ResultsPaneView() if filePath is ResultsPaneView.URI
 
@@ -19,6 +19,7 @@ module.exports =
     @findHistory = new History(findHistory)
     @replaceHistory = new History(replaceHistory)
     @pathsHistory = new History(pathsHistory)
+    @scopeHistory = new History(scopeHistory)
 
     @findOptions = new FindOptions(findOptions)
     @findModel = new BufferSearch(@findOptions)
@@ -124,12 +125,15 @@ module.exports =
     findBuffer = new TextBuffer
     replaceBuffer = new TextBuffer
     pathsBuffer = new TextBuffer
+    scopeBuffer = new TextBuffer
 
     findHistoryCycler = new HistoryCycler(findBuffer, @findHistory)
     replaceHistoryCycler = new HistoryCycler(replaceBuffer, @replaceHistory)
     pathsHistoryCycler = new HistoryCycler(pathsBuffer, @pathsHistory)
+    scopeHistoryCycler = new HistoryCycler(scopeBuffer, @scopeHistory)
 
-    options = {findBuffer, replaceBuffer, pathsBuffer, findHistoryCycler, replaceHistoryCycler, pathsHistoryCycler}
+    options = {findBuffer, replaceBuffer, pathsBuffer, findHistoryCycler, replaceHistoryCycler,
+      pathsHistoryCycler, scopeHistoryCycler}
 
     @findView = new FindView(@findModel, options)
     @projectFindView = new ProjectFindView(@resultsModel, options)
@@ -177,3 +181,4 @@ module.exports =
     findHistory: @findHistory.serialize()
     replaceHistory: @replaceHistory.serialize()
     pathsHistory: @pathsHistory.serialize()
+    scopeHistory: @scopeHistory.serialize()

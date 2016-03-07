@@ -23,12 +23,12 @@ class FindView extends View
       buffer: replaceBuffer
       placeholderText: 'Replace in current buffer'
 
-    scopeFindEditor = buildTextEditor
+    scopeEditor = buildTextEditor
       mini: true
       tabLength: 2
       softTabs: true
       softWrapped: false
-      buffer: scopeFindEditor
+      buffer: scopeEditor
       placeholderText: 'Scope to find in'
 
     @div tabIndex: -1, class: 'find-and-replace', =>
@@ -69,7 +69,7 @@ class FindView extends View
 
       @section class: 'input-block scope-find-container', =>
         @div class: 'input-block-item input-block-item--flex editor-container', =>
-          @subview 'scopeFindEditor', new TextEditorView(editor: scopeFindEditor)
+          @subview 'scopeEditor', new TextEditorView(editor: scopeEditor)
 
       @raw '<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="find-and-replace-icon-regex" viewBox="0 0 20 16" stroke="none" fill-rule="evenodd">
@@ -103,11 +103,12 @@ class FindView extends View
         </symbol>
       </svg>'
 
-  initialize: (@model, {@findHistoryCycler, @replaceHistoryCycler}) ->
+  initialize: (@model, {@findHistoryCycler, @replaceHistoryCycler, @scopeHistoryCycler}) ->
     @subscriptions = new CompositeDisposable
 
     @findHistoryCycler.addEditorElement(@findEditor.element)
     @replaceHistoryCycler.addEditorElement(@replaceEditor.element)
+    @scopeHistoryCycler.addEditorElement(@scopeEditor.element)
 
     @handleEvents()
 

@@ -29,12 +29,12 @@ class ProjectFindView extends View
       buffer: replaceBuffer
       placeholderText: 'Replace in project'
 
-    scopeFindEditor = buildTextEditor
+    scopeEditor = buildTextEditor
       mini: true
       tabLength: 2
       softTabs: true
       softWrapped: false
-      buffer: scopeFindEditor
+      buffer: scopeEditor
       placeholderText: 'Scope to find in'
 
     pathsEditor = buildTextEditor
@@ -79,18 +79,19 @@ class ProjectFindView extends View
 
       @section class: 'input-block scope-find-container', =>
         @div class: 'input-block-item input-block-item--flex editor-container', =>
-          @subview 'scopeFindEditor', new TextEditorView(editor: scopeFindEditor)
+          @subview 'scopeEditor', new TextEditorView(editor: scopeEditor)
 
       @section class: 'input-block paths-container', =>
         @div class: 'input-block-item editor-container', =>
           @subview 'pathsEditor', new TextEditorView(editor: pathsEditor)
 
-  initialize: (@model, {@findHistoryCycler, @replaceHistoryCycler, @pathsHistoryCycler}) ->
+  initialize: (@model, {@findHistoryCycler, @replaceHistoryCycler, @pathsHistoryCycler, @scopeHistoryCycler}) ->
     @subscriptions = new CompositeDisposable
     @handleEvents()
 
     @findHistoryCycler.addEditorElement(@findEditor.element)
     @replaceHistoryCycler.addEditorElement(@replaceEditor.element)
+    @scopeHistoryCycler.addEditorElement(@scopeEditor.element)
     @pathsHistoryCycler.addEditorElement(@pathsEditor.element)
 
     @onlyRunIfChanged = true
