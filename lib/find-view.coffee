@@ -23,6 +23,14 @@ class FindView extends View
       buffer: replaceBuffer
       placeholderText: 'Replace in current buffer'
 
+    scopeFindEditor = buildTextEditor
+      mini: true
+      tabLength: 2
+      softTabs: true
+      softWrapped: false
+      buffer: scopeFindEditor
+      placeholderText: 'Scope to find in'
+
     @div tabIndex: -1, class: 'find-and-replace', =>
       @header class: 'header', =>
         @span outlet: 'descriptionLabel', class: 'header-item description', 'Find in Current Buffer'
@@ -58,6 +66,10 @@ class FindView extends View
             @button outlet: 'replaceNextButton', class: 'btn btn-next', 'Replace'
           @div class: 'btn-group btn-group-replace-all', =>
             @button outlet: 'replaceAllButton', class: 'btn btn-all', 'Replace All'
+
+      @section class: 'input-block scope-find-container', =>
+        @div class: 'input-block-item input-block-item--flex editor-container', =>
+          @subview 'scopeFindEditor', new TextEditorView(editor: scopeFindEditor)
 
       @raw '<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="find-and-replace-icon-regex" viewBox="0 0 20 16" stroke="none" fill-rule="evenodd">

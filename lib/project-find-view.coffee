@@ -29,6 +29,14 @@ class ProjectFindView extends View
       buffer: replaceBuffer
       placeholderText: 'Replace in project'
 
+    scopeFindEditor = buildTextEditor
+      mini: true
+      tabLength: 2
+      softTabs: true
+      softWrapped: false
+      buffer: scopeFindEditor
+      placeholderText: 'Scope to find in'
+
     pathsEditor = buildTextEditor
       mini: true
       tabLength: 2
@@ -68,6 +76,10 @@ class ProjectFindView extends View
         @div class: 'input-block-item', =>
           @div class: 'btn-group btn-group-replace-all', =>
             @button outlet: 'replaceAllButton', class: 'btn disabled', 'Replace All'
+
+      @section class: 'input-block scope-find-container', =>
+        @div class: 'input-block-item input-block-item--flex editor-container', =>
+          @subview 'scopeFindEditor', new TextEditorView(editor: scopeFindEditor)
 
       @section class: 'input-block paths-container', =>
         @div class: 'input-block-item editor-container', =>
